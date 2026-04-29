@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>카이로스에너지 | 프리미엄 산지연금 자문</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepgreen: {
+              DEFAULT: '#064E3B',
+              dark: '#022C22',
+              light: '#065F46'
+            },
+            gold: {
+              DEFAULT: '#D4AF37',
+              dark: '#B8860B',
+              light: '#F3E5AB'
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'Roboto', 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS (Animations & Web Fonts) -->
+  <style>
+    /* 웹 폰트 로드 (프리미엄 느낌을 위한 Pretendard) */
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* 스크롤 페이드인 애니메이션 유틸리티 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* 그라데이션 텍스트용 클래스 */
+    .text-gradient-gold {
+      background: linear-gradient(to right, #D4AF37, #F3E5AB);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* 커스텀 스크롤바 */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #064E3B;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #022C22;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased overflow-x-hidden">
+
+  <!-- ==========================================
+       [PRESENTATION LAYER]
+       HTML 뼈대 및 구조 정의.
+       데이터는 모두 비워두고(id 또는 data-속성), Logic Layer가 주입합니다.
+       ========================================== -->
+       
+  <!-- GNB (Global Navigation Bar) -->
+  <header id="gnb" class="fixed w-full z-50 transition-all duration-500 bg-transparent py-4 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo Container -->
+        <a href="#" class="flex-shrink-0 font-extrabold text-2xl tracking-widest text-white transition-colors duration-300" id="logo-container"></a>
+        
+        <!-- Desktop Menu Container -->
+        <nav class="hidden md:flex space-x-10 items-center" id="menu-container"></nav>
+        
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+          <button class="text-white hover:text-gold focus:outline-none">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="relative h-screen flex items-center justify-center text-center overflow-hidden">
+      <!-- 배경 이미지 및 다크 오버레이 컨테이너 -->
+      <div class="absolute inset-0 z-0">
+        <img id="hero-bg" src="" alt="Hero Background" class="w-full h-full object-cover object-center transform scale-105 transition-transform duration-[10s] ease-in-out" />
+        <!-- 프리미엄 느낌을 위한 그라데이션 다크 오버레이 -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-deepgreen-dark/70 to-black/90"></div>
+      </div>
+      
+      <!-- 메인 카피 컨테이너 -->
+      <div class="relative z-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto fade-in mt-16">
+        <h1 id="hero-main-copy" class="text-5xl md:text-7xl font-extrabold text-white mb-8 leading-tight tracking-tight drop-shadow-2xl"></h1>
+        <p id="hero-sub-copy" class="text-lg md:text-2xl text-gray-300 leading-relaxed font-light drop-shadow-lg max-w-4xl mx-auto"></p>
+        
+        <div class="mt-12">
+          <a href="#profit-model" class="inline-flex items-center px-8 py-4 border border-gold text-base font-medium rounded-full text-gold hover:bg-gold hover:text-deepgreen-dark transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+            자세히 알아보기
+            <svg class="ml-2 w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1: 수익 모델 도식화 -->
+    <section id="profit-model" class="py-32 bg-white relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-20 fade-in">
+          <h2 class="text-sm font-bold text-gold tracking-[0.2em] uppercase mb-3">Profit Model</h2>
+          <h3 class="text-4xl md:text-5xl font-extrabold text-deepgreen-dark mb-6">수익 모델</h3>
+          <div class="w-20 h-1 bg-gradient-to-r from-gold to-gold-light mx-auto"></div>
+        </div>
+        
+        <!-- 데이터가 주입될 4단계 컨테이너 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative" id="phases-container">
+          <!-- 선 연결 UI (데스크톱) -->
+          <div class="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-gray-200 -z-10 transform -translate-y-1/2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: 핵심 기술 -->
+    <section id="core-tech" class="py-32 bg-gray-50 border-t border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-20 fade-in">
+          <h2 class="text-sm font-bold text-gold tracking-[0.2em] uppercase mb-3">Core Technology</h2>
+          <h3 class="text-4xl md:text-5xl font-extrabold text-deepgreen-dark mb-6">핵심 기술</h3>
+          <div class="w-20 h-1 bg-gradient-to-r from-gold to-gold-light mx-auto"></div>
+        </div>
+        
+        <!-- 데이터가 주입될 핵심 기술 컨테이너 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12" id="tech-container"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer & Contact -->
+  <footer id="contact" class="bg-deepgreen-dark text-white pt-24 pb-12 relative overflow-hidden">
+    <!-- 배경 장식 요소 -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0 opacity-10 pointer-events-none">
+      <div class="absolute -top-40 -right-40 w-96 h-96 rounded-full border border-gold"></div>
+      <div class="absolute top-40 -left-20 w-72 h-72 rounded-full border border-gold"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+        
+        <!-- 회사 정보 -->
+        <div class="fade-in">
+          <h3 class="text-3xl font-extrabold mb-8 text-white"><span class="text-gradient-gold" id="footer-logo"></span></h3>
+          <p class="text-gray-400 mb-8 font-light leading-relaxed max-w-md" id="footer-desc"></p>
+          
+          <div id="company-info-container" class="space-y-4 text-gray-300 font-light">
+            <!-- 데이터 주입 -->
+          </div>
+        </div>
+        
+        <!-- 상담 신청 폼 -->
+        <div class="bg-deepgreen p-8 rounded-2xl shadow-2xl border border-white/5 fade-in" style="transition-delay: 200ms;">
+          <h3 class="text-2xl font-bold mb-6 text-gold border-b border-white/10 pb-4">상담 신청</h3>
+          <form id="contact-form" class="space-y-5" onsubmit="event.preventDefault(); alert('상담 신청이 완료되었습니다.');">
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-400 mb-1">성함 / 직책</label>
+              <input type="text" id="name" class="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-lg focus:outline-none focus:border-gold text-white placeholder-gray-500 transition-colors" placeholder="홍길동 대표">
+            </div>
+            <div>
+              <label for="contact-info" class="block text-sm font-medium text-gray-400 mb-1">연락처 / 이메일</label>
+              <input type="text" id="contact-info" class="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-lg focus:outline-none focus:border-gold text-white placeholder-gray-500 transition-colors" placeholder="010-0000-0000 또는 email@domain.com">
+            </div>
+            <div>
+              <label for="message" class="block text-sm font-medium text-gray-400 mb-1">문의 내용</label>
+              <textarea id="message" rows="4" class="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-lg focus:outline-none focus:border-gold text-white placeholder-gray-500 transition-colors resize-none" placeholder="보유하신 산지의 주소나 문의사항을 남겨주세요."></textarea>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-gold to-gold-dark hover:from-yellow-400 hover:to-yellow-600 text-deepgreen-dark font-extrabold py-4 px-6 rounded-lg transition-all duration-300 shadow-[0_4px_14px_0_rgba(212,175,55,0.39)] transform hover:-translate-y-1">
+              자문 신청하기
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- 카피라이트 -->
+      <div class="pt-8 border-t border-white/10 text-center flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-sm text-gray-500 font-light" id="copyright-container"></p>
+        <div class="flex space-x-6 text-sm text-gray-500 font-light">
+          <a href="#" class="hover:text-gold transition-colors">이용약관</a>
+          <a href="#" class="hover:text-gold transition-colors">개인정보처리방침</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       [DATA LAYER & LOGIC LAYER]
+       스크립트 영역에서 데이터 정의 및 렌더링을 처리합니다.
+       ========================================== -->
+  <script>
+    /* ------------------------------------------
+       [DATA LAYER]
+       웹사이트의 모든 텍스트, 이미지 경로, 비즈니스 로직 데이터를 
+       JSON 객체 형태로 중앙 집중화합니다.
+       추후 콘텐츠 수정 시 이 영역만 변경하면 됩니다.
+       ------------------------------------------ */
+    const AppData = {
+      branding: {
+        companyName: "카이로스에너지",
+        logoText: "KAIROS ENERGY",
+        footerDesc: "데이터 자동화 및 GIS 기반 기술을 통해 저평가된 산지의 숨은 가치를 발굴하고, 고객에게 최적화된 자산 솔루션을 제공합니다.",
+        copyright: "© 2026 카이로스에너지. All rights reserved."
+      },
+      menu: [
+        { id: "hero", label: "비전" },
+        { id: "profit-model", label: "수익 모델" },
+        { id: "core-tech", label: "핵심 기술" },
+        { id: "contact", label: "상담 신청" }
+      ],
+      hero: {
+        // 고급스러운 다크 포레스트 이미지 (Unsplash)
+        bgImage: "https://images.unsplash.com/photo-1511497584788-876760111969?q=80&w=2532&auto=format&fit=crop", 
+        mainCopy: "잠든 산지에<br/><span class='text-gradient-gold'>가치의 숨결</span>을 불어넣다.",
+        subCopy: "카이로스에너지는 자체 구축한 데이터 자동화 파이프라인을 통해<br class='hidden md:block'/>저평가된 산지를 발굴하고, 국가와 연계된 안정적인 자산 흐름을 설계합니다."
+      },
+      profitModel: [
+        {
+          phase: "Phase 1",
+          title: "기회 발굴",
+          desc: "경공매 시스템 모니터링 및<br/>우량 필지 선점",
+          icon: `<svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>`
+        },
+        {
+          phase: "Phase 2",
+          title: "자산 성숙",
+          desc: "산림청 매수 조건 부합<br/>최적화 및 보유",
+          icon: `<svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
+        },
+        {
+          phase: "Phase 3",
+          title: "가치 실현",
+          desc: "산지연금형 사유림<br/>매수 계약 체결",
+          icon: `<svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>`
+        },
+        {
+          phase: "Phase 4",
+          title: "안정적 수익",
+          desc: "초기 일시금 수령 및<br/>장기 연금 수급",
+          icon: `<svg class="w-12 h-12 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`
+        }
+      ],
+      coreTech: [
+        {
+          title: "GIS 자동화 탐색",
+          desc: "국유림 연접 토지 및 임도 데이터 GIS 추출, 산지 주소 DB화, 텔레그램 실시간 알림 파이프라인.",
+          icon: `<svg class="w-14 h-14 text-gold mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>`
+        },
+        {
+          title: "리스크 사전 차단",
+          desc: "경사도 초과, 분묘 소재 등 산림청 매수 불가 요건 엄격 필터링.",
+          icon: `<svg class="w-14 h-14 text-gold mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>`
+        },
+        {
+          title: "가치 평가 최적화",
+          desc: "기준 단가 충족 및 감정가액 극대화 토지 선별.",
+          icon: `<svg class="w-14 h-14 text-gold mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>`
+        }
+      ],
+      contactInfo: [
+        { label: "운영", value: "카이로스에너지" },
+        { label: "이메일", value: "contact@kairosenergy.com" },
+        { label: "업무시간", value: "평일 09:00 - 18:00 (주말/공휴일 휴무)" }
+      ]
+    };
+
+    /* ------------------------------------------
+       [LOGIC LAYER]
+       Data Layer의 정보를 읽어와 Presentation Layer의
+       DOM 요소에 주입하고, UI 상호작용 이벤트를 처리합니다.
+       ------------------------------------------ */
+    const AppLogic = {
+      
+      // 1. Data -> DOM 렌더링
+      renderData: function() {
+        // GNB & Footer Branding
+        document.getElementById('logo-container').innerText = AppData.branding.logoText;
+        document.getElementById('footer-logo').innerText = AppData.branding.logoText;
+        document.getElementById('footer-desc').innerText = AppData.branding.footerDesc;
+        document.getElementById('copyright-container').innerText = AppData.branding.copyright;
+        
+        // GNB Menu
+        const menuHtml = AppData.menu.map(item => 
+          `<a href="#${item.id}" class="text-white hover:text-gold transition-colors duration-300 text-sm font-medium tracking-widest relative group">
+            ${item.label}
+            <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full"></span>
+          </a>`
+        ).join('');
+        document.getElementById('menu-container').innerHTML = menuHtml;
+
+        // Hero Section
+        document.getElementById('hero-bg').src = AppData.hero.bgImage;
+        document.getElementById('hero-main-copy').innerHTML = AppData.hero.mainCopy;
+        document.getElementById('hero-sub-copy').innerHTML = AppData.hero.subCopy;
+
+        // Profit Model Section (4단계)
+        const phasesHtml = AppData.profitModel.map((item, idx) => `
+          <div class="relative bg-white p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 fade-in z-10 group" style="transition-delay: ${idx * 150}ms">
+            <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-deepgreen text-gold text-xs font-bold px-4 py-1.5 rounded-full shadow-md tracking-wider border border-white/10">
+              ${item.phase}
+            </div>
+            <div class="mt-4 mb-6 flex justify-center transform group-hover:scale-110 transition-transform duration-300">
+              <div class="p-4 bg-gray-50 rounded-full group-hover:bg-gold/10 transition-colors">
+                ${item.icon}
+              </div>
+            </div>
+            <h4 class="text-xl font-bold text-center text-gray-900 mb-3">${item.title}</h4>
+            <p class="text-gray-500 text-center font-light leading-relaxed text-sm">${item.desc}</p>
+          </div>
+        `).join('');
+        // 데스크톱 라인 유지를 위해 기존 내부 HTML에 append
+        const phasesContainer = document.getElementById('phases-container');
+        phasesContainer.insertAdjacentHTML('beforeend', phasesHtml);
+
+        // Core Tech Section
+        const techHtml = AppData.coreTech.map((item, idx) => `
+          <div class="bg-white p-10 rounded-2xl shadow-sm border border-gray-100 hover:border-gold/50 transition-colors duration-300 fade-in group" style="transition-delay: ${idx * 150}ms">
+            <div class="transform group-hover:-translate-y-2 transition-transform duration-300">
+              ${item.icon}
+            </div>
+            <h4 class="text-2xl font-bold text-gray-900 mb-4">${item.title}</h4>
+            <p class="text-gray-600 font-light leading-relaxed">${item.desc}</p>
+          </div>
+        `).join('');
+        document.getElementById('tech-container').innerHTML = techHtml;
+
+        // Contact Info
+        const contactHtml = AppData.contactInfo.map(info => `
+          <div class="flex items-start">
+            <span class="w-20 font-medium text-gray-500">${info.label}</span>
+            <span class="flex-1 text-gray-300">${info.value}</span>
+          </div>
+        `).join('');
+        document.getElementById('company-info-container').innerHTML = contactHtml;
+      },
+
+      // 2. 이벤트 리스너 등록 (스크롤, 애니메이션 등)
+      initEvents: function() {
+        // Sticky Header Event
+        const header = document.getElementById('gnb');
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 50) {
+            header.classList.remove('bg-transparent', 'border-white/10', 'py-4');
+            header.classList.add('bg-deepgreen-dark/95', 'backdrop-blur-md', 'shadow-lg', 'border-transparent', 'py-2');
+          } else {
+            header.classList.add('bg-transparent', 'border-white/10', 'py-4');
+            header.classList.remove('bg-deepgreen-dark/95', 'backdrop-blur-md', 'shadow-lg', 'border-transparent', 'py-2');
+          }
+        });
+
+        // Scroll Fade-in Animation Event (Intersection Observer)
+        const observerOptions = {
+          root: null,
+          rootMargin: '0px 0px -100px 0px',
+          threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target); // 한 번 보이면 관찰 해제
+            }
+          });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+          observer.observe(el);
+        });
+      },
+
+      // 초기화 함수
+      init: function() {
+        this.renderData();
+        // DOM 렌더링 직후 이벤트를 바인딩하기 위해 약간의 지연
+        setTimeout(() => {
+          this.initEvents();
+        }, 50);
+      }
+    };
+
+    // DOM 트리가 완성되면 로직 실행
+    document.addEventListener('DOMContentLoaded', () => {
+      AppLogic.init();
+    });
+  </script>
+</body>
+</html>
