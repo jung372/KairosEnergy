@@ -232,6 +232,7 @@
       branding: {
         companyName: "카이로스에너지",
         logoText: "KAIROS ENERGY",
+        logoImage: "logo.png",
         footerDesc: "데이터 자동화 및 GIS 기반 기술을 통해 저평가된 산지의 숨은 가치를 발굴하고, 고객에게 최적화된 자산 솔루션을 제공합니다.",
         copyright: "© 2026 카이로스에너지. All rights reserved."
       },
@@ -307,8 +308,8 @@
       // 1. Data -> DOM 렌더링
       renderData: function() {
         // GNB & Footer Branding
-        document.getElementById('logo-container').innerText = AppData.branding.logoText;
-        document.getElementById('footer-logo').innerText = AppData.branding.logoText;
+        document.getElementById('logo-container').innerHTML = `<img src="${AppData.branding.logoImage}" alt="${AppData.branding.companyName} 로고" class="h-9 md:h-10 w-auto object-contain bg-white/90 backdrop-blur-sm rounded shadow-sm px-2 py-1">`;
+        document.getElementById('footer-logo').innerHTML = `<img src="${AppData.branding.logoImage}" alt="${AppData.branding.companyName} 로고" class="h-12 md:h-14 w-auto object-contain bg-white/90 backdrop-blur-sm rounded-lg shadow-md px-3 py-1.5">`;
         document.getElementById('footer-desc').innerText = AppData.branding.footerDesc;
         document.getElementById('copyright-container').innerText = AppData.branding.copyright;
         
